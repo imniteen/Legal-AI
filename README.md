@@ -1,6 +1,4 @@
-# JurisAI Development Plan
 
-## Context
 
 **Problem**: Legal advocates need a powerful tool to analyze complex case files (FIRs, witness statements, evidence logs) from multiple perspectives. Currently, this analysis is manual, time-consuming, and prone to missing critical details.
 
