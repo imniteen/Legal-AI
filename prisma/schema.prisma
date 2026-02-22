@@ -1,0 +1,66 @@
+// JurisAI Database Schema
+// PostgreSQL via Docker
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Stores uploaded case files and their extracted text
+model Case {
+  id            String   @id @default(cuid())
+  name          String   // User-provided case name
+  fileName      String   // Original PDF filename
+  filePath      String   // Storage path on disk
+  fileSize      Int      // File size in bytes
+  totalPages    Int      // Number of pages in PDF
+  extractedText String   @db.Text // Full text with [PAGE X] markers
+  status        String   @default("pending") // pending, processing, analyzed, error
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  analysis     Analysis?
+  chatMessages ChatMessage[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// Stores the AI-generated analysis results
+model Analysis {
+  id              String   @id @default(cuid())
+  caseId          String   @unique
+  case            Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  synopsis        String   @db.Text // Case summary with citations
+  prosecutionJson String   @db.Text // JSON: strengths, evidence, recommendations
+  defenseJson     String   @db.Text // JSON: weaknesses, inconsistencies, recommendations
+  keyDatesJson    String   @db.Text // JSON array of important dates with citations
+  keyPersonsJson  String   @db.Text // JSON array of key persons with roles
+
+  modelUsed       String   @default("gemini-1.5-pro") // Model identifier
+  tokensUsed      Int?     // Token count for analytics
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Stores chat messages for follow-up Q&A
+model ChatMessage {
+  id         String   @id @default(cuid())
+  caseId     String
+  case       Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  role       String   // 'user' or 'assistant'
+  content    String   @db.Text // Message content
+  citations  String?  @db.Text // JSON array of page citations used
+
+  createdAt  DateTime @default(now())
+
+  @@index([caseId])
+  @@index([createdAt])
+}
