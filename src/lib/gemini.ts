@@ -69,7 +69,7 @@ export async function analyzeCase(
   documentText: string
 ): Promise<AnalysisResult> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-2.0-flash",
     generationConfig: {
       temperature: 0.1, // Low temperature for consistent, factual output
       topP: 0.8,
@@ -130,7 +130,7 @@ export async function chatAboutCase(
   userMessage: string
 ): Promise<string> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-2.0-flash",
     generationConfig: {
       temperature: 0.3,
       topP: 0.8,

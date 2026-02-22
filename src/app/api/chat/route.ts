@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { chatAboutCase } from "@/lib/gemini";
+import { chatAboutCase } from "@/lib/llm";
 import { parseCitations } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {

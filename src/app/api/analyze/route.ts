@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { analyzeCase, isWithinContextLimit, estimateTokenCount } from "@/lib/gemini";
+import { analyzeCase, isWithinContextLimit, estimateTokenCount, getActiveProvider, getActiveModel } from "@/lib/llm";
 
 export async function POST(request: NextRequest) {
   try {
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
           defenseJson: JSON.stringify(analysis.defense),
           keyDatesJson: JSON.stringify(analysis.keyDates),
           keyPersonsJson: JSON.stringify(analysis.keyPersons),
-          modelUsed: "gemini-1.5-pro",
+          modelUsed: `${getActiveProvider()}:${getActiveModel()}`,
           tokensUsed: tokensUsed,
         },
       });

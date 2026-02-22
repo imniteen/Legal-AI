@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Scale, Upload, FolderOpen } from "lucide-react";
+import { Scale, Upload, FolderOpen, Home } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -9,7 +9,8 @@ export default function Header() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/", label: "Dashboard", icon: FolderOpen },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/dashboard", label: "Dashboard", icon: FolderOpen },
     { href: "/upload", label: "Upload Case", icon: Upload },
   ];
 
