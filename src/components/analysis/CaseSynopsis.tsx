@@ -2,6 +2,7 @@
 
 import { FileText, Calendar, Users, Sparkles } from "lucide-react";
 import { CitationText } from "./CitationBadge";
+import CollapsibleSection from "./CollapsibleSection";
 import type { KeyDate, KeyPerson } from "@/types";
 
 interface CaseSynopsisProps {
@@ -20,38 +21,44 @@ export default function CaseSynopsis({
   return (
     <div className="space-y-4">
       {/* Synopsis */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-r from-slate-50 to-white">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[var(--primary)] to-indigo-600 flex items-center justify-center shadow-sm">
-            <FileText className="h-4 w-4 text-white" />
+      <CollapsibleSection
+        header={
+          <div className="px-5 py-4 flex items-center gap-3 bg-gradient-to-r from-slate-50 to-white">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[var(--primary)] to-indigo-600 flex items-center justify-center shadow-sm">
+              <FileText className="h-4 w-4 text-white" />
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-900">Case Synopsis</h3>
+              <p className="text-xs text-slate-500">AI-generated summary with citations</p>
+            </div>
+            <Sparkles className="h-4 w-4 text-amber-500 ml-auto" />
           </div>
-          <div>
-            <h3 className="font-bold text-slate-900">Case Synopsis</h3>
-            <p className="text-xs text-slate-500">AI-generated summary with citations</p>
-          </div>
-          <Sparkles className="h-4 w-4 text-amber-500 ml-auto" />
-        </div>
-        <div className="p-5">
+        }
+      >
+        <div className="border-t border-slate-100 p-5">
           <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
             <CitationText text={synopsis} onCitationClick={onCitationClick} />
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
       {/* Key Dates and Persons in a grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Key Dates */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-r from-amber-50 to-white">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-sm">
-              <Calendar className="h-4 w-4 text-white" />
+        <CollapsibleSection
+          header={
+            <div className="px-5 py-4 flex items-center gap-3 bg-gradient-to-r from-amber-50 to-white">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-sm">
+                <Calendar className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900">Key Dates</h3>
+                <p className="text-xs text-slate-500">{keyDates.length} dates identified</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-bold text-slate-900">Key Dates</h3>
-              <p className="text-xs text-slate-500">{keyDates.length} dates identified</p>
-            </div>
-          </div>
-          <div className="p-5">
+          }
+        >
+          <div className="border-t border-slate-100 p-5">
             {keyDates.length > 0 ? (
               <ul className="space-y-3">
                 {keyDates.map((date, index) => (
@@ -69,20 +76,23 @@ export default function CaseSynopsis({
               <p className="text-sm text-slate-400 italic text-center py-4">No key dates identified</p>
             )}
           </div>
-        </div>
+        </CollapsibleSection>
 
         {/* Key Persons */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-r from-blue-50 to-white">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm">
-              <Users className="h-4 w-4 text-white" />
+        <CollapsibleSection
+          header={
+            <div className="px-5 py-4 flex items-center gap-3 bg-gradient-to-r from-blue-50 to-white">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm">
+                <Users className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900">Key Persons</h3>
+                <p className="text-xs text-slate-500">{keyPersons.length} persons identified</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-bold text-slate-900">Key Persons</h3>
-              <p className="text-xs text-slate-500">{keyPersons.length} persons identified</p>
-            </div>
-          </div>
-          <div className="p-5">
+          }
+        >
+          <div className="border-t border-slate-100 p-5">
             {keyPersons.length > 0 ? (
               <ul className="space-y-3">
                 {keyPersons.map((person, index) => (
@@ -108,7 +118,7 @@ export default function CaseSynopsis({
               <p className="text-sm text-slate-400 italic text-center py-4">No key persons identified</p>
             )}
           </div>
-        </div>
+        </CollapsibleSection>
       </div>
     </div>
   );

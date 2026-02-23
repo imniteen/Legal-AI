@@ -271,7 +271,7 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Stats */}
+            {/* Stats
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
@@ -281,7 +281,7 @@ export default function LandingPage() {
                   <div className="text-sm text-slate-500">{stat.label}</div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Hero Image / Demo */}

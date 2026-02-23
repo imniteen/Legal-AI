@@ -89,6 +89,17 @@ export interface KeyPerson {
 }
 
 /**
+ * Legal reference (section/act/law) cited in the case
+ */
+export interface LegalReference {
+  reference: string;  // e.g. "Section 19(1)" or "Section 4"
+  act: string;        // e.g. "PMLA" — used for grouping
+  context: string;    // 1-2 sentence description of how it was invoked
+  usedBy: "prosecution" | "defense" | "both" | "court";
+  citations: string;  // e.g. "[Page 7, 8]"
+}
+
+/**
  * Full analysis result from AI
  */
 export interface AnalysisResult {
@@ -97,6 +108,7 @@ export interface AnalysisResult {
   defense: DefenseAnalysis;
   keyDates: KeyDate[];
   keyPersons: KeyPerson[];
+  legalReferences?: LegalReference[];
 }
 
 /**
@@ -110,6 +122,7 @@ export interface Analysis {
   defenseJson: string;
   keyDatesJson: string;
   keyPersonsJson: string;
+  legalReferencesJson?: string;
   modelUsed: string;
   tokensUsed?: number;
   createdAt: Date;

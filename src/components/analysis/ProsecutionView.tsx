@@ -2,6 +2,7 @@
 
 import { Gavel, CheckCircle, FileCheck, Lightbulb, Target } from "lucide-react";
 import { CitationText } from "./CitationBadge";
+import CollapsibleSection from "./CollapsibleSection";
 import { cn } from "@/lib/utils";
 import type { ProsecutionAnalysis, AnalysisPoint } from "@/types";
 
@@ -57,19 +58,21 @@ function AnalysisPointItem({
 
 export default function ProsecutionView({ analysis, onCitationClick }: ProsecutionViewProps) {
   return (
-    <div className="bg-gradient-to-br from-red-50 via-rose-50 to-white rounded-xl border border-red-100 shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-red-600 to-rose-600 px-5 py-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-          <Gavel className="h-5 w-5 text-white" />
+    <CollapsibleSection
+      className="bg-gradient-to-br from-red-50 via-rose-50 to-white border-red-100"
+      header={
+        <div className="bg-gradient-to-r from-red-600 to-rose-600 px-5 py-4 flex items-center gap-3 rounded-t-xl">
+          <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <Gavel className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white">Prosecution View</h3>
+            <p className="text-red-100 text-xs">Plaintiff perspective analysis</p>
+          </div>
+          <Target className="h-5 w-5 text-red-200 ml-auto" />
         </div>
-        <div>
-          <h3 className="text-lg font-bold text-white">Prosecution View</h3>
-          <p className="text-red-100 text-xs">Plaintiff perspective analysis</p>
-        </div>
-        <Target className="h-5 w-5 text-red-200 ml-auto" />
-      </div>
-
+      }
+    >
       <div className="p-5 space-y-6">
         {/* Strengths */}
         <div>
@@ -145,6 +148,6 @@ export default function ProsecutionView({ analysis, onCitationClick }: Prosecuti
           )}
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }

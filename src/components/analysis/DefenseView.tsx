@@ -2,6 +2,7 @@
 
 import { Shield, AlertTriangle, AlertCircle, Lightbulb } from "lucide-react";
 import { CitationText } from "./CitationBadge";
+import CollapsibleSection from "./CollapsibleSection";
 import { cn } from "@/lib/utils";
 import type { DefenseAnalysis, AnalysisPoint } from "@/types";
 
@@ -61,19 +62,21 @@ function AnalysisPointItem({
 
 export default function DefenseView({ analysis, onCitationClick }: DefenseViewProps) {
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-white rounded-xl border border-blue-100 shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-          <Shield className="h-5 w-5 text-white" />
+    <CollapsibleSection
+      className="bg-gradient-to-br from-blue-50 via-indigo-50 to-white border-blue-100"
+      header={
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 flex items-center gap-3 rounded-t-xl">
+          <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <Shield className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-white">Defense View</h3>
+            <p className="text-blue-100 text-xs">Defendant perspective analysis</p>
+          </div>
+          <Shield className="h-5 w-5 text-blue-200 ml-auto" />
         </div>
-        <div>
-          <h3 className="text-lg font-bold text-white">Defense View</h3>
-          <p className="text-blue-100 text-xs">Defendant perspective analysis</p>
-        </div>
-        <Shield className="h-5 w-5 text-blue-200 ml-auto" />
-      </div>
-
+      }
+    >
       <div className="p-5 space-y-6">
         {/* Weaknesses in Prosecution Case */}
         <div>
@@ -161,6 +164,6 @@ export default function DefenseView({ analysis, onCitationClick }: DefenseViewPr
           )}
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }

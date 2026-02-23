@@ -34,21 +34,55 @@ interface CitationTextProps {
 }
 
 export function CitationText({ text, onCitationClick }: CitationTextProps) {
-  // Parse text and replace [Page X] with clickable badges
-  const parts = text.split(/(\[PAGE?\s*\d+\])/gi);
+  // Parse text and replace [Page X], [Page X-Y], [Pages X-Y], [Pages X, Y, Z] with clickable badges
+  // Matches: [Page 11], [Page 11-12], [Pages 11-12], [Pages 11, 12, 13], [Page 11, 12]
+  const citationPattern = /(\[PAGES?\s*[\d,\s-]+\])/gi;
+  const parts = text.split(citationPattern);
 
   return (
     <span>
       {parts.map((part, index) => {
-        const match = part.match(/\[PAGE?\s*(\d+)\]/i);
-        if (match) {
-          const pageNum = parseInt(match[1], 10);
+        // Check if this part is a citation
+        const citationMatch = part.match(/\[PAGES?\s*([\d,\s-]+)\]/i);
+        if (citationMatch) {
+          const pageSpec = citationMatch[1].trim();
+          const pages: number[] = [];
+
+          // Parse the page specification
+          // Handle comma-separated values and ranges
+          const segments = pageSpec.split(/[,\s]+/).filter(s => s.length > 0);
+
+          for (const segment of segments) {
+            if (segment.includes('-')) {
+              // It's a range like "11-12"
+              const [start, end] = segment.split('-').map(n => parseInt(n.trim(), 10));
+              if (!isNaN(start) && !isNaN(end)) {
+                for (let p = start; p <= end; p++) {
+                  pages.push(p);
+                }
+              }
+            } else {
+              // It's a single page number
+              const pageNum = parseInt(segment, 10);
+              if (!isNaN(pageNum)) {
+                pages.push(pageNum);
+              }
+            }
+          }
+
+          // Remove duplicates and sort
+          const uniquePages = [...new Set(pages)].sort((a, b) => a - b);
+
           return (
-            <CitationBadge
-              key={index}
-              page={pageNum}
-              onClick={onCitationClick}
-            />
+            <span key={index} className="inline-flex items-center gap-1 flex-wrap">
+              {uniquePages.map((pageNum, pageIndex) => (
+                <CitationBadge
+                  key={`${index}-${pageIndex}`}
+                  page={pageNum}
+                  onClick={onCitationClick}
+                />
+              ))}
+            </span>
           );
         }
         return <span key={index}>{part}</span>;

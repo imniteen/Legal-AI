@@ -8,6 +8,7 @@ import PDFViewer from "@/components/pdf/PDFViewer";
 import CaseSynopsis from "@/components/analysis/CaseSynopsis";
 import ProsecutionView from "@/components/analysis/ProsecutionView";
 import DefenseView from "@/components/analysis/DefenseView";
+import LegalReferencesView from "@/components/analysis/LegalReferencesView";
 import AnalysisLoader from "@/components/analysis/AnalysisLoader";
 import ChatInterface from "@/components/chat/ChatInterface";
 import {
@@ -26,6 +27,7 @@ import type {
   DefenseAnalysis,
   KeyDate,
   KeyPerson,
+  LegalReference,
 } from "@/types";
 
 interface CaseData {
@@ -330,6 +332,7 @@ export default function AnalysisPage() {
   };
   const keyDates: KeyDate[] = analysis.keyDates || [];
   const keyPersons: KeyPerson[] = analysis.keyPersons || [];
+  const legalReferences: LegalReference[] = analysis.legalReferences || [];
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -413,6 +416,12 @@ export default function AnalysisPage() {
                 synopsis={analysis.synopsis}
                 keyDates={keyDates}
                 keyPersons={keyPersons}
+                onCitationClick={handleCitationClick}
+              />
+
+              {/* Legal References */}
+              <LegalReferencesView
+                legalReferences={legalReferences}
                 onCitationClick={handleCitationClick}
               />
 

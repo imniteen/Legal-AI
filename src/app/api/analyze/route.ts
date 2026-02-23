@@ -38,6 +38,9 @@ export async function POST(request: NextRequest) {
           defense: JSON.parse(caseData.analysis.defenseJson),
           keyDates: JSON.parse(caseData.analysis.keyDatesJson),
           keyPersons: JSON.parse(caseData.analysis.keyPersonsJson),
+          legalReferences: caseData.analysis.legalReferencesJson
+            ? JSON.parse(caseData.analysis.legalReferencesJson)
+            : [],
         },
       });
     }
@@ -73,6 +76,7 @@ export async function POST(request: NextRequest) {
           defenseJson: JSON.stringify(analysis.defense),
           keyDatesJson: JSON.stringify(analysis.keyDates),
           keyPersonsJson: JSON.stringify(analysis.keyPersons),
+          legalReferencesJson: JSON.stringify(analysis.legalReferences ?? []),
           modelUsed: `${getActiveProvider()}:${getActiveModel()}`,
           tokensUsed: tokensUsed,
         },
@@ -155,6 +159,9 @@ export async function GET(request: NextRequest) {
         defense: JSON.parse(caseData.analysis.defenseJson),
         keyDates: JSON.parse(caseData.analysis.keyDatesJson),
         keyPersons: JSON.parse(caseData.analysis.keyPersonsJson),
+        legalReferences: caseData.analysis.legalReferencesJson
+          ? JSON.parse(caseData.analysis.legalReferencesJson)
+          : [],
       },
     });
   } catch (error) {

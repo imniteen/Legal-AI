@@ -41,6 +41,7 @@ model Analysis {
   defenseJson     String   @db.Text // JSON: weaknesses, inconsistencies, recommendations
   keyDatesJson    String   @db.Text // JSON array of important dates with citations
   keyPersonsJson  String   @db.Text // JSON array of key persons with roles
+  legalReferencesJson String? @db.Text // JSON array of legal sections/acts referenced
 
   modelUsed       String   @default("gemini-1.5-pro") // Model identifier
   tokensUsed      Int?     // Token count for analytics
